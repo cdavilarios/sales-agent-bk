@@ -20,5 +20,5 @@ export async function researchCompany(companyName: string) {
     tools: { searchWeb },
     stopWhen: stepCountIs(MAX_STEPS),
   });
-  return result.text;
+  return { text: result.text, steps: result.steps };
 }
