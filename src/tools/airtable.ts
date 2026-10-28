@@ -1,4 +1,5 @@
 import { experimental_createMCPClient as createMCPClient } from "@ai-sdk/mcp";
+import type { Prospect } from "../agent/research.ts";
 
 const AIRTABLE_MCP_URL = "https://mcp.airtable.com/mcp/";
 
@@ -27,17 +28,8 @@ export async function getAirtableMcp() {
 
 type AirtableClient = Awaited<ReturnType<typeof getAirtableMcp>>;
 
-// Mirrors the §7.1 Prospect shape; becomes z.infer<typeof ProspectSchema> once research.ts owns the schema.
-export type Prospect = {
-  companyName: string;
-  domain: string;
-  overview: string;
-  signals: { name: string; description: string; strength: "strong" | "moderate" | "weak" }[];
-  leadScore: number;
-  scoreReasoning: string;
-  suggestedAngle: string;
-  lastResearched: string;
-};
+// The type lives with its schema in research.ts (§1.2); type-only, so no runtime import cycle.
+export type { Prospect };
 
 type McpResult = {
   isError?: boolean;
